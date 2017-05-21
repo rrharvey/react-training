@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import Alert from './components/Alert';
+import Alerts, {AlertData} from './components/Alerts';
 import Column from './components/Column';
 import Container from './components/Container';
 import Footer from './components/Footer';
@@ -9,6 +9,7 @@ import Jumbotron from './components/Jumbotron';
 import Posts, {PostData} from './components/Posts';
 import Row from './components/Row';
 
+const alerts: AlertData[] = require('./alerts.json');
 const posts: PostData[] = require('./posts.json');
 
 class App extends React.Component<{}, null> {
@@ -26,12 +27,7 @@ class App extends React.Component<{}, null> {
             <Posts posts={posts}/>
           </Column>
           <Column size="md" span="6">
-            <Alert title="Heads up!"
-              body="This alert needs your attention, but it's not super important."
-              dismissable={true} />
-            <Alert title="Heads up!" body="This alert needs your attention, but it's not super important." />
-            <Alert title="Heads up!" body="This alert needs your attention, but it's not super important." />
-            <Alert title="Heads up!" body="This alert needs your attention, but it's not super important." />
+            <Alerts alerts={alerts}/>
           </Column>
         </Row>
         <Footer />
