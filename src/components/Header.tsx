@@ -2,11 +2,11 @@ import * as React from 'react';
 
 const reactLogo = require('./react.svg');
 
-interface HeaderPropTypes {
+interface HeaderProps {
     title: string;
 }
 
-const Header = (props: HeaderPropTypes) => (
+const Header = (props: HeaderProps) => (
     <div className="header clearfix">
         <nav>
             <ul className="nav nav-pills pull-right">

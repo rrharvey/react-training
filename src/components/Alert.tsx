@@ -3,14 +3,14 @@ import * as classNames from 'classnames';
 
 type AlertType = 'success' | 'info' | 'warning' | 'danger';
 
-interface AlertPropTypes {
+interface AlertProps {
     title?: string;
     body: string;
     type?: AlertType;
     dismissable?: boolean;
 }
 
-const Alert: React.SFC<AlertPropTypes> = ({ type, title, body, dismissable }) => (
+const Alert: React.SFC<AlertProps> = ({ type, title, body, dismissable }) => (
     <div className={classNames('alert', `alert-${type}`, {
         'alert-dismissible': dismissable
     })} role="alert">

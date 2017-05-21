@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-interface PostPropTypes {
+export interface PostProps {
     title: string;
     body: string;
 }
 
-const Post = ({ title, body }: PostPropTypes) => (
+const Post: React.SFC<PostProps> = ({ title, body }) => (
     <div>
         <h4>{title}</h4>
         <p>{body}</p>

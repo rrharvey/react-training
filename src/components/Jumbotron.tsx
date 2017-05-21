@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-interface JumbotronPropTypes {
+interface JumbotronProps {
     heading: string;
     lead?: string;
     children?: React.ReactNode;
 }
 
-const Jumbotron = ({ heading, lead, children }: JumbotronPropTypes) => (
+const Jumbotron = ({ heading, lead, children }: JumbotronProps) => (
     <div className="jumbotron">
         <h1>{heading}</h1>
         <p className="lead">{lead}</p>

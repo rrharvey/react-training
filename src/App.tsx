@@ -6,8 +6,10 @@ import Container from './components/Container';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Jumbotron from './components/Jumbotron';
-import Post from './components/Post';
+import Posts, {PostData} from './components/Posts';
 import Row from './components/Row';
+
+const posts: PostData[] = require('./posts.json');
 
 class App extends React.Component<{}, null> {
   render() {
@@ -21,18 +23,7 @@ class App extends React.Component<{}, null> {
         </Jumbotron>
         <Row className="marketing">
           <Column size="md" span="6">
-            <Post title="ea molestias quasi exercitationem"
-              body={`et iusto sed quo iure voluptatem occaecati omnis eligendi aut ad 
-                     voluptatem \doloribus vel accusantium quis pariatur molestiae porro 
-                     eius odio et labore et velit aut`} />
-            <Post title="ea molestias quasi exercitationem"
-              body={`et iusto sed quo iure voluptatem occaecati omnis eligendi aut ad 
-                     voluptatem \doloribus vel accusantium quis pariatur molestiae porro 
-                     eius odio et labore et velit aut`} />
-            <Post title="ea molestias quasi exercitationem"
-              body={`et iusto sed quo iure voluptatem occaecati omnis eligendi aut ad 
-                     voluptatem \doloribus vel accusantium quis pariatur molestiae porro 
-                     eius odio et labore et velit aut`} />
+            <Posts posts={posts}/>
           </Column>
           <Column size="md" span="6">
             <Alert title="Heads up!"

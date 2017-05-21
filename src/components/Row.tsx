@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 
-interface RowPropTypes {
+interface RowProps {
     className: string;
     children?: React.ReactNode;
 }
 
-const Row = (props: RowPropTypes) => 
+const Row = (props: RowProps) => 
     <div className={classNames('row', props.className)}>{props.children}</div>;
 
 export default Row;
