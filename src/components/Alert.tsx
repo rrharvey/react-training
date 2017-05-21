@@ -1,15 +1,31 @@
 import * as React from 'react';
+import * as classNames from 'classnames';
+
+type AlertType = 'success' | 'info' | 'warning' | 'danger';
 
 interface AlertPropTypes {
+    title?: string;
+    body: string;
+    type?: AlertType;
+    dismissable?: boolean;
 }
 
-const Alert = (props: AlertPropTypes) => (
-    <div className="alert alert-info alert-dismissible" role="alert">
-        <button type="button" className="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+const Alert: React.SFC<AlertPropTypes> = ({ type, title, body, dismissable }) => (
+    <div className={classNames('alert', `alert-${type}`, {
+        'alert-dismissible': dismissable
+    })} role="alert">
+        {dismissable && (
+            <button type="button" className="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        )}
+        <strong>{title}</strong> {body}
     </div>
 );
+
+Alert.defaultProps = {
+    type: 'info',
+    dismissable: false
+};
 
 export default Alert;

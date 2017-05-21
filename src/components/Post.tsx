@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 interface PostPropTypes {
+    title: string;
+    body: string;
 }
 
-const Post = (props: PostPropTypes) => (
+const Post = ({ title, body }: PostPropTypes) => (
     <div>
-        <h4>ea molestias quasi exercitationem</h4>
-        <p>et iusto sed quo iure voluptatem occaecati omnis eligendi aut ad voluptatem
-            doloribus vel accusantium quis pariatur molestiae porro eius odio et labore et velit aut</p>
+        <h4>{title}</h4>
+        <p>{body}</p>
     </div>
 );
 

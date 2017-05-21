@@ -3,7 +3,7 @@ import * as classNames from 'classnames';
 
 interface RowPropTypes {
     className: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 const Row = (props: RowPropTypes) => 

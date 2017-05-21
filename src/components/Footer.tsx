@@ -1,9 +1,6 @@
 import * as React from 'react';
 
-interface FooterPropTypes {
-}
-
-const Footer = (props: FooterPropTypes) => (
+const Footer = ({}) => (
     <footer className="footer">
         <p>&copy; 2017 Company, Inc.</p>
     </footer>

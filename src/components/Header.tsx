@@ -3,6 +3,7 @@ import * as React from 'react';
 const reactLogo = require('./react.svg');
 
 interface HeaderPropTypes {
+    title: string;
 }
 
 const Header = (props: HeaderPropTypes) => (
@@ -14,7 +15,7 @@ const Header = (props: HeaderPropTypes) => (
                 <li role="presentation"><a href="#">Contact</a></li>
             </ul>
         </nav>
-        <h3 className="text-muted"><img src={reactLogo} className="app-logo" />React Training</h3>
+        <h3 className="text-muted"><img src={reactLogo} className="app-logo" />{props.title}</h3>
     </div>
 );
 
