@@ -24,21 +24,41 @@ interface AlertsProps {
 
 interface AlertsState {
     filter?: string;
+    filteredAlerts: AlertData[];
 }
 
 class Alerts extends React.Component<AlertsProps, AlertsState> {
-    constructor() {
+    constructor(props: AlertsProps) {
         super();
-        this.state = {};
+        this.state = {
+            filteredAlerts: [...props.alerts]
+        };
     }
 
     handleFilterSelected = (filter: string) => {
-        this.setState({ filter });
+        this.state.filteredAlerts.splice(0, 1);
+
+        this.setState({
+            filter,
+            filteredAlerts: this.props.alerts.filter(a => !filter || filter === a.type)
+        });
+    }
+
+    componentWillReceiveProps(nextProps: AlertsProps) {
+        const { filter } = this.state;
+        const filteredAlerts = filter
+            ? nextProps.alerts.filter(a => !filter || filter === a.type)
+            : [...nextProps.alerts];
+        this.setState({ filteredAlerts });
+    }
+
+    shouldComponentUpdate(nextProps: AlertsProps, nextState: AlertsState) {
+        return this.props.alerts !== nextProps.alerts
+            || this.state.filteredAlerts !== nextState.filteredAlerts;
     }
 
     render() {
-        const { alerts } = this.props;
-        const { filter } = this.state;
+        const { filter, filteredAlerts } = this.state;
 
         return (
             <div className="alerts">
@@ -56,8 +76,7 @@ class Alerts extends React.Component<AlertsProps, AlertsState> {
                         />
                     </div>
                 </div>
-                {alerts
-                    .filter(a => !filter || filter === a.type)
+                {filteredAlerts
                     .map(a => {
                         let { id, ...props } = a;
                         return <Alert key={id} {...props} />;
