@@ -18,43 +18,38 @@ export interface AlertData {
     type?: AlertType;
 }
 
-interface AlertsProps {
-    alerts: AlertData[];
-}
-
 interface AlertsState {
     filter?: string;
+    alerts: AlertData[];
     filteredAlerts: AlertData[];
 }
 
-class Alerts extends React.Component<AlertsProps, AlertsState> {
-    constructor(props: AlertsProps) {
-        super();
-        this.state = {
-            filteredAlerts: [...props.alerts]
-        };
-    }
+class Alerts extends React.Component<{}, AlertsState> {
+    state = {
+        filter: '',
+        alerts: [] as AlertData[],
+        filteredAlerts: [] as AlertData[]
+    };
 
-    handleFilterSelected = (filter: string) => {
-        this.state.filteredAlerts.splice(0, 1);
-
+    async getPosts() {
+        const response = await fetch(`http://localhost:3001/alerts`);
+        const alerts: AlertData[] = await response.json();
+        const filter = this.state.filter;
         this.setState({
-            filter,
-            filteredAlerts: this.props.alerts.filter(a => !filter || filter === a.type)
+            alerts,
+            filteredAlerts: alerts.filter(a => !filter || filter === a.type)
         });
     }
 
-    componentWillReceiveProps(nextProps: AlertsProps) {
-        const { filter } = this.state;
-        const filteredAlerts = filter
-            ? nextProps.alerts.filter(a => !filter || filter === a.type)
-            : [...nextProps.alerts];
-        this.setState({ filteredAlerts });
+    handleFilterSelected = (filter: string) => {
+        this.setState({
+            filter,
+            filteredAlerts: this.state.alerts.filter(a => !filter || filter === a.type)
+        });
     }
 
-    shouldComponentUpdate(nextProps: AlertsProps, nextState: AlertsState) {
-        return this.props.alerts !== nextProps.alerts
-            || this.state.filteredAlerts !== nextState.filteredAlerts;
+    componentDidMount() {
+        this.getPosts();
     }
 
     render() {
