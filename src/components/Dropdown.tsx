@@ -1,22 +1,42 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-// import * as OnClickOut from 'react-onclickoutside';
+import * as OnClickOut from 'react-onclickoutside';
+
+export interface DropdownItem {
+    key: string;
+    value: string;
+}
+
+interface DropdownItemProps {
+    item: DropdownItem;
+    onClickItem(key: string): void;
+}
+
+class DropdownItemWrapper extends React.Component<DropdownItemProps, null> {
+    handleClick = () => {
+        const { item, onClickItem } = this.props;
+        onClickItem(item.key);
+    }
+
+    render() {
+        return <li><a href="#" onClick={this.handleClick}>{this.props.item.value}</a></li>;
+    }
+}
 
 interface DropdownProps {
     text: string;
+    items: DropdownItem[];
     rightAlign?: boolean;
+    onItemSelected(key: string): void;
 }
 
 interface DropdownState {
     open: boolean;
 }
 
-// type ClickOutDropdownProps = DropdownProps & OnClickOut.InjectedOnClickOutProps;
+type ClickOutDropdownProps = DropdownProps & OnClickOut.InjectedOnClickOutProps;
 
-class Dropdown extends React.Component<DropdownProps, DropdownState> {
-
-    private _outerDiv: HTMLElement;
-
+class Dropdown extends React.Component<ClickOutDropdownProps, DropdownState> {
     constructor() {
         super();
         this.state = {
@@ -31,28 +51,27 @@ class Dropdown extends React.Component<DropdownProps, DropdownState> {
     }
 
     open = () => {
-        document.addEventListener('click', this.handleClickOutside, true);
         this.setState({ open: true });
     }
 
     close = () => {
-        document.removeEventListener('click', this.handleClickOutside, true);
         this.setState({ open: false });
     }
 
-    handleClickOutside = (e: MouseEvent) => {
-        if (this._outerDiv && !this._outerDiv.contains(e.target as Node)) {
-            this.close();
-        }
+    handleClickOutside = () => {
+        this.close();
     }
 
-    setDropdownRef = (ref: HTMLElement) => this._outerDiv = ref;
+    handleClickItem = (key: string) => {
+        this.close();
+        this.props.onItemSelected(key);
+    }
 
     render() {
-        const { text, rightAlign } = this.props;
+        const { text, items, rightAlign } = this.props;
         const { open } = this.state;
         return (
-            <div className={classNames('dropdown', { 'open': open })} ref={this.setDropdownRef}>
+            <div className={classNames('dropdown', { 'open': open })}>
                 <button type="button"
                     className="btn btn-default dropdown-toggle"
                     onClick={this.toggleOpen}
@@ -60,16 +79,11 @@ class Dropdown extends React.Component<DropdownProps, DropdownState> {
                     {text} <span className="caret" />
                 </button>
                 <ul className={classNames('dropdown-menu', { 'dropdown-menu-right': rightAlign })}>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" className="divider" />
-                    <li><a href="#">Separated link</a></li>
+                    {items.map(i => <DropdownItemWrapper key={i.key} item={i} onClickItem={this.handleClickItem} />)}
                 </ul>
             </div>
         );
     }
 }
 
-// export default OnClickOut(Dropdown);
-export default Dropdown;
+export default OnClickOut(Dropdown);

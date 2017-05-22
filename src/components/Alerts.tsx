@@ -1,7 +1,15 @@
 import * as React from 'react';
 import Alert, { AlertType } from './Alert';
-import Dropdown from './Dropdown';
+import Dropdown, { DropdownItem } from './Dropdown';
 import './Alerts.css';
+
+const filters: DropdownItem[] = [
+    { key: '', value: 'None' },
+    { key: 'success', value: 'Success' },
+    { key: 'info', value: 'Info' },
+    { key: 'warning', value: 'Warning' },
+    { key: 'danger', value: 'Danger' }
+];
 
 export interface AlertData {
     id?: number;
@@ -14,19 +22,46 @@ interface AlertsProps {
     alerts: AlertData[];
 }
 
-class Alerts extends React.Component<AlertsProps, null> {
+interface AlertsState {
+    filter?: string;
+}
+
+class Alerts extends React.Component<AlertsProps, AlertsState> {
+    constructor() {
+        super();
+        this.state = {};
+    }
+
+    handleFilterSelected = (filter: string) => {
+        this.setState({ filter });
+    }
+
     render() {
+        const { alerts } = this.props;
+        const { filter } = this.state;
+
         return (
             <div className="alerts">
                 <div className="clearfix">
+                    {filter && (
+                        <div className="filter pull-left">
+                            Filter: {filters.filter(i => i.key === filter)[0].value}
+                        </div>
+                    )}
                     <div className="pull-right">
-                        <Dropdown text="Filter" rightAlign={true} />
+                        <Dropdown text="Filter"
+                            items={filters}
+                            onItemSelected={this.handleFilterSelected}
+                            rightAlign={true}
+                        />
                     </div>
                 </div>
-                {this.props.alerts.map(a => {
-                    let { id, ...props } = a;
-                    return <Alert key={id} {...props} />;
-                })}
+                {alerts
+                    .filter(a => !filter || filter === a.type)
+                    .map(a => {
+                        let { id, ...props } = a;
+                        return <Alert key={id} {...props} />;
+                    })}
             </div>
         );
     }
