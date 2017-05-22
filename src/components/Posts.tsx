@@ -2,7 +2,7 @@ import * as React from 'react';
 import Post from './Post';
 
 function randomPage() {
-    return Math.floor(Math.random() * 3) + 1;
+    return Math.floor(Math.random() * 5) + 1;
 }
 
 export interface PostData {

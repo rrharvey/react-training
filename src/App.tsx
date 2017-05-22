@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import AddPostForm from './components/AddPostForm';
 import Alerts from './components/Alerts';
 import Column from './components/Column';
 import Container from './components/Container';
@@ -21,6 +22,7 @@ class App extends React.Component<{}, null> {
         </Jumbotron>
         <Row className="marketing">
           <Column size="md" span="6">
+            <AddPostForm />
             <Posts />
           </Column>
           <Column size="md" span="6">
