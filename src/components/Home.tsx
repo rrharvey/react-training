@@ -2,6 +2,8 @@ import * as React from 'react';
 import AddPostForm from './AddPostForm';
 import Alerts from './Alerts';
 import Column from './Column';
+import Count from './Count';
+import IncrementButton from './IncrementButton';
 import Jumbotron from './Jumbotron';
 import Posts from './Posts';
 import Row from './Row';
@@ -14,8 +16,13 @@ const Home: React.SFC<HomeProps> = (props) => (
         <Jumbotron heading="Jumbotron heading"
             lead="Cras justo odio, dapibus ac facilisis in, egestas eget quam."
         >
-            <p><a className="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
+            <IncrementButton />
         </Jumbotron>
+        <Row>
+            <Column size="sm" span="12">
+                <Count />
+            </Column>
+        </Row>
         <Row className="marketing">
             <Column size="sm" span="6">
                 <AddPostForm />

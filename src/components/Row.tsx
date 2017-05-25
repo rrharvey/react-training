@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 
 interface RowProps {
-    className: string;
+    className?: string;
     children?: React.ReactNode;
 }
 
