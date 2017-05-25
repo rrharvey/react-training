@@ -1,6 +1,7 @@
 import * as React from 'react';
-import Alert, { AlertType } from './Alert';
+import Alert from './Alert';
 import Dropdown, { DropdownItem } from './Dropdown';
+import { AlertData } from '../actions';
 import './Alerts.css';
 
 const filters: DropdownItem[] = [
@@ -10,13 +11,6 @@ const filters: DropdownItem[] = [
     { key: 'warning', value: 'Warning' },
     { key: 'danger', value: 'Danger' }
 ];
-
-export interface AlertData {
-    id?: number;
-    title?: string;
-    message: string;
-    type?: AlertType;
-}
 
 interface AlertsState {
     filter?: string;

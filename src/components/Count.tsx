@@ -17,4 +17,3 @@ const CountComponent: React.SFC<ConnectedStoreProps> = ({ count }) =>
 const Count = connect(mapStateToProps)(CountComponent);
 
 export default Count;
-

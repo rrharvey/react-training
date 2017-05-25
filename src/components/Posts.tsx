@@ -1,33 +1,37 @@
 import * as React from 'react';
 import Post from './Post';
+import { PostData, loadPosts } from '../actions';
+import { Store } from '../store';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
-function randomPage() {
-    return Math.floor(Math.random() * 5) + 1;
+interface PostsProps {
 }
 
-export interface PostData {
-    id?: number;
-    title: string;
-    body: string;
-}
-
-interface PostsState {
+interface ConnectedStoreProps {
     posts: PostData[];
 }
 
-class Posts extends React.Component<{}, PostsState> {
-    state = {
-        posts: [] as PostData[]
-    };
+interface ConnectedDispatchProps {
+    loadPosts(): void;
+}
+
+const mapStateToProps = (state: Store.All, ownProps: PostsProps): ConnectedStoreProps => ({
+    posts: state.api.posts
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Store.All>) => ({
+    loadPosts: () => dispatch(loadPosts())
+});
+
+class PostsComponent extends React.Component<PostsProps & ConnectedStoreProps & ConnectedDispatchProps, {}> {
 
     componentDidMount() {
-        fetch(`http://localhost:3001/posts?_page=${randomPage()}&_limit=3`)
-            .then(resp => resp.json())
-            .then(posts => this.setState({posts}));
+        this.props.loadPosts();
     }
 
     render() {
-        const { posts } = this.state;
+        const { posts } = this.props;
 
         return (
             <div>
@@ -40,5 +44,7 @@ class Posts extends React.Component<{}, PostsState> {
         );
     }
 }
+
+const Posts: React.ComponentClass<PostsProps> = connect(mapStateToProps, mapDispatchToProps)(PostsComponent);
 
 export default Posts;

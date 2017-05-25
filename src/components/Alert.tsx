@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-
-export type AlertType = 'success' | 'info' | 'warning' | 'danger';
+import { AlertType } from '../actions';
 
 export interface AlertProps {
     title?: string;
